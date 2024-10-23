@@ -1,6 +1,7 @@
 package com.keyin.book;
 
 import com.keyin.author.Author;
+import com.keyin.publisher.Publisher;
 import jakarta.persistence.*;
 
 @Entity
@@ -15,7 +16,8 @@ public class Book {
     @ManyToOne
     private Author author;
 
-    private String publisher;
+    @ManyToOne
+    private Publisher publisher;
 
     private String isbn;
 
@@ -42,12 +44,11 @@ public class Book {
     }
 
 
-
-    public String getPublisher() {
+    public Publisher getPublisher() {
         return publisher;
     }
 
-    public void setPublisher(String publisher) {
+    public void setPublisher(Publisher publisher) {
         this.publisher = publisher;
     }
 

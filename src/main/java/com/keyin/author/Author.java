@@ -15,8 +15,6 @@ public class Author {
 
     private String authorName;
 
-
-
     public Author() {
     }
 
