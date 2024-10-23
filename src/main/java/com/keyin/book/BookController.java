@@ -2,6 +2,8 @@ package com.keyin.book;
 
 import com.keyin.author.Author;
 import com.keyin.author.AuthorService;
+import com.keyin.publisher.Publisher;
+import com.keyin.publisher.PublisherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,9 @@ public class BookController {
     @Autowired
     private AuthorService authorService;
 
+    @Autowired
+    private PublisherService publisherService;
+
     @GetMapping("/listAllBooks")
     public ResponseEntity<Iterable<Book>> getAllBooks() {
          bookService.getAllBooks();
@@ -28,6 +33,7 @@ public class BookController {
     @PostMapping("/addNewBook")
     public Book addNewBook(@RequestBody Book book) {
         Optional<Author> authorOptional = Optional.ofNullable(authorService.findByAuthorName(book.getAuthor().getAuthorName()));
+        Optional<Publisher> publisherOptional = Optional.ofNullable(publisherService.findByPublisherName(book.getPublisher().getPublisherName()));
 
         Author author;
         if (authorOptional.isPresent()) {
@@ -37,8 +43,17 @@ public class BookController {
             author = book.getAuthor();
             authorService.createNewAuthor(author);
         }
+        book.setAuthor(author);
 
-        book.setAuthor(author); // Set the persisted author on the book
+        Publisher publisher;
+        if (publisherOptional.isPresent()) {
+            publisher = publisherOptional.get();
+        } else {
+
+            publisher = book.getPublisher();
+            publisherService.createNewPublisher(publisher);
+        }
+        book.setPublisher(publisher);
         return bookService.AddBook(book);
 
     }
