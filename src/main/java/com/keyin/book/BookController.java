@@ -86,5 +86,10 @@ public class BookController {
         return bookService.findByAuthor(authorName);
     }
 
+    @GetMapping("/getBooksForStore")
+    public Iterable<Book> getBooksForStore(@RequestParam("storeName") String storeName) {
+        return bookService.findByStoreName(storeName);
+    }
+
 
 }
