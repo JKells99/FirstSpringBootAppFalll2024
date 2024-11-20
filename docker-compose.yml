@@ -1,7 +1,7 @@
 version: '3'
 services:
   myapp-main:
-    image: firstappfall2024nov13:latest
+    image: jkells/final2024:latest
     ports:
       - 8080:8080
     environment:
